@@ -12,6 +12,26 @@
 
 int main(int argc, char* argv[]){
 
+    int sockfd;
+    struct sockaddr_in server;
+    struct sockaddr_in client;
+
+    struct hostent host;
+    char* buff = (char *) malloc(SIZE);
+    int len;
+
+
+    sockfd = socket(PF_INET,SOCK_DGRAM,0);
+
+    struct in_addr IP = {atoi(argc>=1 ? argv[0] : 0)};   //atoi convert string to int, SUCKS
+
+    server.sin_family = AF_INET;
+    server.sin_port = PORT;
+    server.sin_addr = IP;
+
+    scanf(" %s",buff); //change len !!
+    
+    write(sockfd,buff,len);
 
     return 0;
 }

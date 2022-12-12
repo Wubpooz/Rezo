@@ -21,18 +21,20 @@ int main(int argc, char*argv[]){
     
     client.sin_family = AF_INET;
     client.sin_port = PORT;
-    struct in_addr IP_client = {192168001001};    // IP = 192.168.1.1
+    unsigned int ip = 192168001001; //problème conv car long int
+    struct in_addr IP_client = {ip};    // IP = 192.168.1.1
     client.sin_addr = IP_client;
     
     
     server.sin_port=bind(sockfd,&server,size);
     
     
-    int msg;
-    
+    char* msg_rec;
+    char* msg_sent;
+
     while(1){
-       msg= recvfrom(sockfd, buf,size,0,client->IP_client,size);
-        write(sockfd,buf,size); 
+        recvfrom(sockfd,msg_rec,size,0,&server,8);  // the 8 are placeholders and should be type const struct sockaddr * et pas sockaddr_in
+        write(sockfd,msg_sent,8); 
     }
     //close();
 
