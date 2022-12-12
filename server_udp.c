@@ -28,13 +28,13 @@ int main(int argc, char*argv[]){
     server.sin_port=bind(sockfd,&server,size);
     
     
+    int msg;
     
     while(1){
-        recvfrom();
-        write();
-    
+       msg= recvfrom(sockfd, buf,size,0,client->IP_client,size);
+        write(sockfd,buf,size); 
     }
-    close();
+    //close();
 
     return 0;
 }
