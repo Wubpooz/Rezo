@@ -14,14 +14,14 @@ int main(int argc, char*argv[]){
     int sockfd;
     struct sockaddr_in client;
     struct sockaddr_in server;
-    unsigned int size;
+    unsigned int size;    // INTIALIZE
     
     
     sockfd = socket(PF_INET, SOCK_DGRAM,0);
     
     client.sin_family = AF_INET;
     client.sin_port = PORT;
-    unsigned int ip = 192168001001; //problème conv car long int
+    unsigned int ip = 192168001001;     // PROBLEME conv car long int
     struct in_addr IP_client = {ip};    // IP = 192.168.1.1
     client.sin_addr = IP_client;
     
@@ -30,11 +30,11 @@ int main(int argc, char*argv[]){
     
     
     char* msg_rec;
-    char* msg_sent;
+    char* msg_sent = (char *) (argc>=1 ? argv[0] : "nothing");
 
     while(1){
-        recvfrom(sockfd,msg_rec,size,0,&server,8);  // the 8 are placeholders and should be type const struct sockaddr * et pas sockaddr_in
-        write(sockfd,msg_sent,8); 
+        recvfrom(sockfd,msg_rec,size,0,&server,100);
+        write(sockfd,msg_sent,100); 
     }
     //close();
 

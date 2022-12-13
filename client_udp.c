@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 
     struct hostent host;
     char* buff = (char *) malloc(SIZE);
-    int len;
+    unsigned int len = 20;
 
 
     sockfd = socket(PF_INET,SOCK_DGRAM,0);
@@ -32,8 +32,9 @@ int main(int argc, char* argv[]){
     server.sin_port = PORT;
     server.sin_addr = IP;
 
-    scanf("%" STR(SIZE) "s",buff); // limit input size to SIZE ??
-    //change len !!
+    client.sin_port = bind(sockfd,&client,len); // connecte ????
+
+    scanf("%" STR(len) "s",buff); // limit input size to len
     
     write(sockfd,buff,len);
 
