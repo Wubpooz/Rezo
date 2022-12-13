@@ -6,11 +6,11 @@
 
 #Compiler
 CP = gcc
-CFLAGS =
+CFLAGS = -Wall
 
 #Linker
 LD = gcc
-LDFLAGS =
+LDFLAGS = -Wall
 
 #Cleaner (can specify a dir in which bin would be created)
 RM = rm -rvf

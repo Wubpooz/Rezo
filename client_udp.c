@@ -10,6 +10,9 @@
 #define SIZE 100
 #define PORT 9600
 
+#define STR2(x) #x
+#define STR(X) STR2(X)
+
 int main(int argc, char* argv[]){
 
     int sockfd;
@@ -29,7 +32,8 @@ int main(int argc, char* argv[]){
     server.sin_port = PORT;
     server.sin_addr = IP;
 
-    scanf(" %s",buff); //change len !!
+    scanf("%" STR(SIZE) "s",buff); // limit input size to SIZE ??
+    //change len !!
     
     write(sockfd,buff,len);
 
