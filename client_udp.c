@@ -26,10 +26,10 @@ void free(void* ptr){
 int main(int argc, char* argv[]){
 
     int sockfd;
-    struct sockaddr_in server;  //use ?
+    struct sockaddr_in server;
     struct sockaddr_in client;
 
-    struct hostent host;    // use ?
+    struct hostent host;
     char* buff = (char *) malloc(SIZE);
     unsigned int len = 20;
 
@@ -38,26 +38,31 @@ int main(int argc, char* argv[]){
 
 
 
-    char *p;
-    int ip;
-    errno = 0;
-    long conv = strtol(argc>=1 ? argv[1] : "", &p, 10);
-    if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN) {} 
-    else {ip = conv; }
+    // char *p;
+    // int ip;
+    // errno = 0;
+    // long conv = strtol(argc>=1 ? argv[1] : "", &p, 10);
+    // if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN) {} 
+    // else {ip = conv; }
 
-    struct in_addr IP = {ip};
 
-    server.sin_family = AF_INET;
+    host = *gethostbyname(argc>=0 ? argv[0] : "");
+
+    struct in_addr IP = {(unsigned long)**host.h_addr_list};
+
+    server.sin_family = host.h_addrtype;
     server.sin_port = PORT;
     server.sin_addr = IP;
 
-    client.sin_port = bind(sockfd, (struct sockaddr *) &client,len);
+    client.sin_port = bind(sockfd, (struct sockaddr *) &server,host.h_length);   // previously &client et len
+
 
     scanf("%" STR(len) "s",buff); // limit input size to len
     
+
     write(sockfd,buff,len);
 
-    free(buff);
 
+    free(buff);
     return 0;
 }
