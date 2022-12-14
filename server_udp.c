@@ -12,9 +12,9 @@
 int main(int argc, char*argv[]){
 
     int sockfd;
-    struct sockaddr_in client;
+    struct sockaddr_in client;  //use ?
     struct sockaddr_in server;
-    unsigned int size;    // INTIALIZE
+    unsigned int size = 100;    // right value ?
     
     
     sockfd = socket(PF_INET, SOCK_DGRAM,0);
@@ -26,14 +26,14 @@ int main(int argc, char*argv[]){
     client.sin_addr = IP_client;
     
     
-    server.sin_port=bind(sockfd,&server,size);
+    server.sin_port=bind(sockfd,(struct sockaddr *)&server,size);
     
     
-    char* msg_rec;
+    char* msg_rec = "";  //use
     char* msg_sent = (char *) (argc>=1 ? argv[0] : "nothing");
 
     while(1){
-        recvfrom(sockfd,msg_rec,size,0,&server,100);
+        recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&server,(socklen_t*)&size);
         write(sockfd,msg_sent,100); 
     }
     //close();
