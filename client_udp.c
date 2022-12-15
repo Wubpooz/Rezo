@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
     struct sockaddr_in client;
 
     struct hostent host;
-    char* buff = (char *) malloc(SIZE);
+    char* buff = (char *) malloc(SIZE); //Size * sizeof(char) ?
     unsigned int len = 20;
 
 
