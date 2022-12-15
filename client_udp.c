@@ -35,12 +35,11 @@ int main(int argc, char* argv[]){
     // char *p;
     // int ip;
     // errno = 0;
-    // long conv = strtol(argc>=1 ? argv[1] : "", &p, 10);
+    // long conv = strtol(argc>=2 ? argv[1] : "", &p, 10);
     // if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN) {} 
     // else {ip = conv; }
-
-    if(argc<=1 || argv[0]=="/"){return 1;}
-    host = *gethostbyname(argv[0]);
+    if(argc<2 || argv[1]=="/"){return 1;}
+    host = *gethostbyname(argv[1]);
 
     struct in_addr IP = {(unsigned long)**host.h_addr_list};
 
@@ -52,10 +51,9 @@ int main(int argc, char* argv[]){
 
 
     scanf("%" STR(len) "s",buff); // limit input size to len
-    
+    printf("%s\n",buff);
 
     write(sockfd,buff,len);
-
 
     free(buff);
     return 0;

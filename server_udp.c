@@ -31,12 +31,12 @@ int main(int argc, char* argv[]){
     
     
     char* msg_rec = "";  //use
-    char* msg_sent = (char *) (argc>=1 ? argv[0] : "nothing");
+    char* msg_sent = (char *) (argc>=2 ? argv[1] : "nothing");
 
     while(1){
-        recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
+        size = recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
         printf("%s\n",msg_rec);
-        write(sockfd,msg_sent,100); 
+        write(sockfd,msg_sent,size); 
     }
     //close();
 
