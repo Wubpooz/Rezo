@@ -9,7 +9,7 @@
 #define PORT 9600
 
 
-int main(int argc, char*argv[]){
+int main(int argc, char* argv[]){
 
     int sockfd;
     struct sockaddr_in client;
@@ -22,7 +22,7 @@ int main(int argc, char*argv[]){
     client.sin_family = AF_INET;
     client.sin_port = PORT;
     unsigned long ip = 192168001001;
-    struct in_addr IP_client = {ip};   // IP = 192.168.1.1
+    struct in_addr IP_client = {ip};   // IP = 192.168.1.1 hopefully
     client.sin_addr = IP_client;
     
     
@@ -34,6 +34,7 @@ int main(int argc, char*argv[]){
 
     while(1){
         recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
+        printf("%s\n",msg_rec);
         write(sockfd,msg_sent,100); 
     }
     //close();
