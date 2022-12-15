@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
     // if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN) {} 
     // else {ip = conv; }
 
-    if(argc<=1){return 1;}
+    if(argc<=1 || argv[0]=="/"){return 1;}
     host = *gethostbyname(argv[0]);
 
     struct in_addr IP = {(unsigned long)**host.h_addr_list};
