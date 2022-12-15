@@ -41,19 +41,19 @@ int main(int argc, char* argv[]){
     if(argc<2 || argv[1]=="/"){return 1;}
     host = *gethostbyname(argv[1]);
 
-    struct in_addr IP = {(unsigned long)**host.h_addr_list};
+    struct in_addr IP = {(unsigned long)host.h_addr_list[0][0]};
 
     server.sin_family = host.h_addrtype;
     server.sin_port = PORT;
     server.sin_addr = IP;
 
-    client.sin_port = bind(sockfd,(struct sockaddr *)&server,host.h_length);   // previously &client et len
+    client.sin_port = PORT;   // previously &client et len
 
 
     scanf("%" STR(len) "s",buff); // limit input size to len
     printf("%s\n",buff);
 
-    write(sockfd,buff,len);
+    sendto(sockfd,buff,100,0,(const struct sockaddr *) &server,sizeof(&server));
 
     free(buff);
     return 0;
