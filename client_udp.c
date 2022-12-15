@@ -18,11 +18,6 @@
 #define STR(X) STR2(X)
 
 
-
-void free(void* ptr){
-
-}
-
 int main(int argc, char* argv[]){
 
     int sockfd;

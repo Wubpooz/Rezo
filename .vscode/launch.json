@@ -1,11 +1,11 @@
 {
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "(gdb) client_udp",
             "type": "cppdbg",
             "request": "launch",
-            "program": "enter program name, for example ${workspaceFolder}/a.out",
-            "args": [],
+            "program": "/home/tp-home003/136d3551-9f15-4199-b79f-689c6f899f87/Desktop/Rezo/client_udp",
+            "args": ["test"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

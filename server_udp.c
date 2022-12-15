@@ -21,9 +21,10 @@ int main(int argc, char* argv[]){
     
     client.sin_family = AF_INET;
     client.sin_port = PORT;
-    unsigned long ip = 192168001001;
-    struct in_addr IP_client = {ip};   // IP = 192.168.1.1 hopefully
-    client.sin_addr = IP_client;
+    // unsigned long ip = 192168001001;
+    // struct in_addr IP_client = {ip};   // IP = 192.168.1.1 hopefully
+    // client.sin_addr = IP_client;
+    client.sin_addr.s_addr = INADDR_ANY;
     
     
     server.sin_port=bind(sockfd,(struct sockaddr *)&client,size);   // previously &server
