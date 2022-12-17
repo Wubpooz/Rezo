@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
     struct sockaddr_in client;
     struct sockaddr_in server;
     unsigned int size = 100;    // right value ?    supposed to be client address size
-    
+
     
     sockfd = socket(PF_INET, SOCK_DGRAM,0);
     
@@ -35,6 +35,8 @@ int main(int argc, char* argv[]){
     while(1){
         recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
         printf("%s\n",msg_rec);
+
+        if(msg_rec!=""){close(sockfd);}
     }
 
     return 0;
