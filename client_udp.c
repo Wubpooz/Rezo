@@ -25,12 +25,12 @@ int main(int argc, char* argv[]){
     struct sockaddr_in client;
 
     struct hostent host;
-    char* buff = (char *) malloc(SIZE); //Size * sizeof(char) ?
-    unsigned int len = 20;
+    //char* buff = (char *) malloc(SIZE*sizeof(char));
+    char buff[SIZE];
+    unsigned int len = 20;  //what's that ?
 
 
     sockfd = socket(PF_INET,SOCK_DGRAM,0);
-
 
     // char *p;
     // int ip;
@@ -38,23 +38,23 @@ int main(int argc, char* argv[]){
     // long conv = strtol(argc>=2 ? argv[1] : "", &p, 10);
     // if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN) {} 
     // else {ip = conv; }
-    if(argc<2 || argv[1]=="/"){return 1;}
+    if(argc<2){return 1;}
     host = *gethostbyname(argv[1]);
 
     struct in_addr IP = {(unsigned long)host.h_addr_list[0][0]};
 
     server.sin_family = host.h_addrtype;
     server.sin_port = PORT;
-    server.sin_addr = IP;
+    server.sin_addr = IP; // or INADDR_ANY ?
 
-    client.sin_port = PORT;   // previously &client et len
+    client.sin_port = PORT;
 
-
+    printf("Client message : ");
     scanf("%" STR(len) "s",buff); // limit input size to len
-    printf("%s\n",buff);
 
-    sendto(sockfd,buff,100,0,(const struct sockaddr *) &server,sizeof(&server));
+    sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(&server));
+    printf("Message sent.\n");
 
-    free(buff);
+    //free(buff);
     return 0;
 }

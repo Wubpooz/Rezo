@@ -27,18 +27,15 @@ int main(int argc, char* argv[]){
     client.sin_addr.s_addr = INADDR_ANY;
     
     
-    server.sin_port=bind(sockfd,(struct sockaddr *)&client,size);   // previously &server
+    server.sin_port= bind(sockfd,(struct sockaddr *)&client,size);
+    printf("%d",server.sin_port);
     
-    
-    char* msg_rec = "";  //use
-    char* msg_sent = (char *) (argc>=2 ? argv[1] : "nothing");
+    char* msg_rec = "";
 
     while(1){
         recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
         printf("%s\n",msg_rec);
-        write(sockfd,msg_sent,100); 
     }
-    //close();
 
     return 0;
 }
