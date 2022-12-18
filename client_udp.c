@@ -38,14 +38,14 @@ int main(int argc, char* argv[]){
 
     server.sin_family = host.h_addrtype;
     server.sin_port = PORT;
-    server.sin_addr = IP; // or INADDR_ANY ?
+    server.sin_addr.s_addr = INADDR_ANY; // or INADDR_ANY ?
 
     client.sin_port = PORT;
 
     printf("Client message : ");
     scanf("%" STR(len) "s",buff); // limit input size to len
 
-    sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(&server));
+    sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(server));
     printf("Message sent.\n");
 
     return 0;
