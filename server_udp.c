@@ -18,25 +18,21 @@ int main(int argc, char* argv[]){
 
     
     sockfd = socket(PF_INET, SOCK_DGRAM,0);
-    
+
     client.sin_family = AF_INET;
     client.sin_port = PORT;
-    // unsigned long ip = 192168001001;
-    // struct in_addr IP_client = {ip};   // IP = 192.168.1.1 hopefully
-    // client.sin_addr = IP_client;
     client.sin_addr.s_addr = INADDR_ANY;
     
-    
-    server.sin_port= bind(sockfd,(struct sockaddr *)&client,size);
+    server.sin_port = bind(sockfd,(struct sockaddr *)&client,size);
     printf("%d",server.sin_port);
     
-    char* msg_rec = "";
+    char* msg_rec = '\0';
 
     while(1){
         recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
         printf("%s\n",msg_rec);
 
-        if(msg_rec!=""){close(sockfd);}
+        if(*msg_rec!='\0'){close(sockfd);}
     }
 
     return 0;
