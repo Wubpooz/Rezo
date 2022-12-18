@@ -14,15 +14,11 @@
 #define SIZE 100
 #define PORT 9600
 
-#define STR2(x) #x
-#define STR(X) STR2(X)
-
 
 int main(int argc, char* argv[]){
 
     int sockfd;
     struct sockaddr_in server;
-
     struct hostent host;
     char buff[SIZE];
     unsigned int len = 20;
@@ -35,7 +31,6 @@ int main(int argc, char* argv[]){
 
     if(argc<2){return 1;}
     host = *gethostbyname(argv[1]);
-
     struct in_addr IP = {(unsigned long)host.h_addr_list[0][0]};
 
     server.sin_family = host.h_addrtype;
@@ -44,9 +39,9 @@ int main(int argc, char* argv[]){
 
 
     printf("Client message : ");
-    scanf("%" STR(len) "s",buff); // limit input size to len
-
+    fgets(buff, len, stdin);    // = scanf("%lens",buff);
     sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(server));
+    printf("msg sent : %s\n",buff);
     printf("Message sent.\n");
 
     close(sockfd);

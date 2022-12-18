@@ -30,12 +30,13 @@ int main(int argc, char* argv[]){
         exit(EXIT_FAILURE); 
     }
 
+
  
-    char* msg_rec = malloc(size);
+    char* msg_rec = malloc(20);
     int rec_len = 0;
 
     while(1){
-        rec_len = recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,&size); //msg_rec=0x5555555592a0 "@\003" (\003 = CTRL+C) => *msg_rec: 64 '@'    but if client_udp not run, doesn't go further
+        rec_len = recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,&size);
         if(msg_rec!=NULL && rec_len!=-1){break; close(sockfd);}
     }
     
