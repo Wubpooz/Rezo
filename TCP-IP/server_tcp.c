@@ -16,12 +16,12 @@ int main(int argc, char* argv[]){
     unsigned int size = sizeof(client);
 
     
-    if((sockfd = socket(PF_INET,SOCK_DGRAM,0))<0){ 
+    if((sockfd = socket(PF_INET,SOCK_STREAM,0))<0){ 
         perror("socket creation failed"); 
         exit(EXIT_FAILURE); 
     } 
 
-    server.sin_family = AF_INET;
+    server.sin_family = PF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons(PORT);
     
@@ -29,6 +29,19 @@ int main(int argc, char* argv[]){
         perror("bind failed"); 
         exit(EXIT_FAILURE); 
     }
+    
+
+    if(listen(sockfd,1)==-1){ 
+        perror("request not found"); 
+        exit(EXIT_FAILURE); 
+    }
+
+    if((int socktb = socket(PF_INET,SOCK_SOCK_STREAM,0))<0){ 
+        perror("socket creation failed"); 
+        exit(EXIT_FAILURE); 
+    } 
+
+    accept(socktb,(struct sockaddr)&client,&sizeof(client));    //INITALIZE CLIENT
 
 
     char* msg_rec = malloc(20);
@@ -41,6 +54,8 @@ int main(int argc, char* argv[]){
     
     msg_rec[rec_len] = '\0';
     printf("Message : %s\n",msg_rec);
+
+    close();
 
     return 0;
 }

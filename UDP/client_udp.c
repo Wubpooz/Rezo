@@ -42,7 +42,6 @@ int main(int argc, char* argv[]){
     printf("Client message : ");
     fgets(buff, len, stdin);    // = scanf("%lens",buff);
     sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(server));
-    printf("msg sent : %s\n",buff);
     printf("Message sent.\n");
 
     close(sockfd);
