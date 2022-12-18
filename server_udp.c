@@ -31,7 +31,6 @@ int main(int argc, char* argv[]){
     }
 
 
- 
     char* msg_rec = malloc(20);
     int rec_len = 0;
 
