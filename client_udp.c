@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 
     struct hostent host;
     char buff[SIZE];
-    unsigned int len = 20;  //what's that ?
+    unsigned int len = 20;
 
 
     if((sockfd = socket(PF_INET,SOCK_DGRAM,0))<0){ 
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
 
     server.sin_family = host.h_addrtype;
     server.sin_port = htons(PORT);
-    server.sin_addr = IP;
+    server.sin_addr.s_addr = INADDR_ANY;
 
 
     printf("Client message : ");
