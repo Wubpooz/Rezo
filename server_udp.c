@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
     char* msg_rec = '\0';
 
     while(1){
-        recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,(socklen_t*)&size);
+        recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,&size);
         printf("%s\n",msg_rec);
 
         if(*msg_rec!='\0'){close(sockfd);}

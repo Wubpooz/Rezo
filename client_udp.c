@@ -25,19 +25,12 @@ int main(int argc, char* argv[]){
     struct sockaddr_in client;
 
     struct hostent host;
-    //char* buff = (char *) malloc(SIZE*sizeof(char));
     char buff[SIZE];
     unsigned int len = 20;  //what's that ?
 
 
     sockfd = socket(PF_INET,SOCK_DGRAM,0);
 
-    // char *p;
-    // int ip;
-    // errno = 0;
-    // long conv = strtol(argc>=2 ? argv[1] : "", &p, 10);
-    // if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN) {} 
-    // else {ip = conv; }
     if(argc<2){return 1;}
     host = *gethostbyname(argv[1]);
 
@@ -55,6 +48,5 @@ int main(int argc, char* argv[]){
     sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(&server));
     printf("Message sent.\n");
 
-    //free(buff);
     return 0;
 }
