@@ -23,9 +23,9 @@ int main(int argc, char* argv[]){
     client.sin_port = PORT;
     client.sin_addr.s_addr = INADDR_ANY;
     
-    server.sin_port = bind(sockfd,(struct sockaddr *)&client,size);
-    printf("%d",server.sin_port);
-    
+    server.sin_port = bind(sockfd,(struct sockaddr *)&client,size); // sin port still 0 after that
+ 
+ 
     char* msg_rec = '\0';
 
     while(1){
