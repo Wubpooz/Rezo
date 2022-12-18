@@ -7,7 +7,7 @@
 #include <netdb.h>
 #include <string.h>
 
-
+#include <arpa/inet.h>
 #include <errno.h>
 #include <limits.h>
 
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
 
     int sockfd;
     struct sockaddr_in server;
-    struct hostent host;
+    struct hostent *host;
     char buff[SIZE];
     unsigned int len = 20;
 
@@ -30,12 +30,13 @@ int main(int argc, char* argv[]){
     }
 
     if(argc<2){return 1;}
-    host = *gethostbyname(argv[1]);
-    struct in_addr IP = {(unsigned long)host.h_addr_list[0][0]};
+    host = gethostbyname(argv[1]);
+    if(!host) return 1;
+    char* IP = inet_ntoa(*(struct in_addr*)host->h_addr);
 
-    server.sin_family = host.h_addrtype;
+    server.sin_family = host->h_addrtype;
     server.sin_port = htons(PORT);
-    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_addr.s_addr = inet_addr(IP);
 
 
     printf("Client message : ");
