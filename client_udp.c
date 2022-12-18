@@ -22,14 +22,16 @@ int main(int argc, char* argv[]){
 
     int sockfd;
     struct sockaddr_in server;
-    struct sockaddr_in client;
 
     struct hostent host;
     char buff[SIZE];
     unsigned int len = 20;  //what's that ?
 
 
-    sockfd = socket(PF_INET,SOCK_DGRAM,0);
+    if((sockfd = socket(PF_INET,SOCK_DGRAM,0))<0){ 
+        perror("socket creation failed"); 
+        exit(EXIT_FAILURE); 
+    }
 
     if(argc<2){return 1;}
     host = *gethostbyname(argv[1]);
@@ -37,10 +39,9 @@ int main(int argc, char* argv[]){
     struct in_addr IP = {(unsigned long)host.h_addr_list[0][0]};
 
     server.sin_family = host.h_addrtype;
-    server.sin_port = PORT;
-    server.sin_addr.s_addr = INADDR_ANY; // or INADDR_ANY ?
+    server.sin_port = htons(PORT);
+    server.sin_addr = IP;
 
-    client.sin_port = PORT;
 
     printf("Client message : ");
     scanf("%" STR(len) "s",buff); // limit input size to len
@@ -48,5 +49,6 @@ int main(int argc, char* argv[]){
     sendto(sockfd,buff,SIZE,0,(const struct sockaddr *) &server,sizeof(server));
     printf("Message sent.\n");
 
+    close(sockfd);
     return 0;
 }
