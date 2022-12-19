@@ -24,8 +24,8 @@ int main(int argc, char* argv[]){
     unsigned int len = 20;
 
 
-    if((sockfd = socket(PF_INET,SOCK_DGRAM,0))<0){ 
-        perror("Socket creation failed."); 
+    if((sockfd = socket(PF_INET,SOCK_STREAM,0))<0){ 
+        perror("Socket creation failed.\n"); 
         exit(EXIT_FAILURE); 
     }
     printf("Socket created.\n");
@@ -41,15 +41,26 @@ int main(int argc, char* argv[]){
 
     
     if(connect(sockfd,(struct sockaddr *)&server,sizeof(server))!=0){
-        printf("Connection failed.");
+        printf("Connection failed.\n");
         exit(EXIT_FAILURE); 
     }
     printf("Connection successful.\n");
 
-    printf("Client Message : ");
-    fgets(buff,len,stdin);
-    write(sockfd,buff,len);
-    printf("Message sent.\n");
+
+    while(1){
+        printf("Client : ");
+        fgets(buff,len,stdin);
+        write(sockfd,buff,len);
+        //printf("Message sent.\n");
+
+        read(sockfd, buff, sizeof(buff));
+        printf("Server : %s", buff);
+
+        if ((strncmp(buff, "exit", 4)) == 0) {
+            printf("Exit.\n");
+            break;
+        }
+    }
 
     close(sockfd);
     return 0;
