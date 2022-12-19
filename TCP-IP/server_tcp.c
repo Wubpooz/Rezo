@@ -22,8 +22,12 @@ int main(int argc, char* argv[]){
     } 
 
     server.sin_family = PF_INET;
-    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_addr.s_addr = htonl(INADDR_ANY);
     server.sin_port = htons(PORT);
+
+    client.sin_family = PF_INET;
+    client.sin_addr.s_addr = INADDR_ANY;
+    client.sin_port = htons(PORT);
     
     if(bind(sockfd,(const struct sockaddr *)&server,sizeof(server))<0){ 
         perror("bind failed"); 
@@ -31,26 +35,24 @@ int main(int argc, char* argv[]){
     }
     
 
-    if(listen(sockfd,1)==-1){ 
+    if(listen(sockfd,1)!=0){ 
         perror("request not found"); 
         exit(EXIT_FAILURE); 
     }
 
     int socktb;
-    if(socktb = socket(PF_INET,SOCK_STREAM,0)<0){ 
-        perror("socket creation failed"); 
+    if((socktb = accept(sockfd,(struct sockaddr *)&client,&size))<0){ 
+        perror("connection socket creation failed"); 
         exit(EXIT_FAILURE); 
-    } 
-
-    accept(socktb,(struct sockaddr *)&client,sizeof(&client));    //INITALIZE CLIENT
+    } //INITALIZE CLIENT
 
 
     char* msg_rec = malloc(20);
     int rec_len = 0;
 
     while(1){
-        rec_len = recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,&size);
-        if(msg_rec!=NULL && rec_len!=-1){break; close(socktb);}
+        rec_len = read(socktb,msg_rec,20);
+        if(msg_rec!=NULL && rec_len>0){break; close(socktb);}
     }
     
     msg_rec[rec_len] = '\0';

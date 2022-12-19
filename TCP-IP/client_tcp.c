@@ -40,11 +40,15 @@ int main(int argc, char* argv[]){
 
 
     
-    connect(sockfd,(struct sockaddr *)&server,sizeof(server));
+    if(connect(sockfd,(struct sockaddr *)&server,sizeof(server))!=0){
+        printf("Connection failed\n");
+        exit(EXIT_FAILURE); 
+    }
+
     printf("Client Message : ");
     fgets(buff,len,stdin);
     write(sockfd,buff,len);
-    printf("Message sent !");
+    printf("Message sent !\n");
 
     close(sockfd);
     return 0;
