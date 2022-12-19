@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
     }
     
     msg_rec[rec_len] = '\0';
-    printf("Message : %s\n",msg_rec);
+    printf("Message : %s",msg_rec);
 
     return 0;
 }
