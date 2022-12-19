@@ -25,9 +25,10 @@ int main(int argc, char* argv[]){
 
 
     if((sockfd = socket(PF_INET,SOCK_DGRAM,0))<0){ 
-        perror("socket creation failed"); 
+        perror("Socket creation failed."); 
         exit(EXIT_FAILURE); 
     }
+    printf("Socket created.\n");
 
     if(argc<2){return 1;}
     host = gethostbyname(argv[1]);
@@ -38,17 +39,17 @@ int main(int argc, char* argv[]){
     server.sin_port = htons(PORT);
     server.sin_addr.s_addr = inet_addr(IP);
 
-
     
     if(connect(sockfd,(struct sockaddr *)&server,sizeof(server))!=0){
-        printf("Connection failed\n");
+        printf("Connection failed.");
         exit(EXIT_FAILURE); 
     }
+    printf("Connection successful.\n");
 
     printf("Client Message : ");
     fgets(buff,len,stdin);
     write(sockfd,buff,len);
-    printf("Message sent !\n");
+    printf("Message sent.\n");
 
     close(sockfd);
     return 0;

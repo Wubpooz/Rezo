@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 
     
     if((sockfd = socket(PF_INET,SOCK_STREAM,0))<0){ 
-        perror("socket creation failed"); 
+        perror("Socket creation failed."); 
         exit(EXIT_FAILURE); 
     } 
 
@@ -30,26 +30,29 @@ int main(int argc, char* argv[]){
     client.sin_port = htons(PORT);
     
     if(bind(sockfd,(const struct sockaddr *)&server,sizeof(server))<0){ 
-        perror("bind failed"); 
+        perror("Bind failed."); 
         exit(EXIT_FAILURE); 
     }
+    printf("Binding successful.\n");
     
 
-    if(listen(sockfd,1)!=0){ 
-        perror("request not found"); 
-        exit(EXIT_FAILURE); 
-    }
-
+    printf("Listening...\n");
+    if ((listen(sockfd, 5)) != 0) {
+		printf("Listen failed.\n");
+		exit(0);
+	}
+    printf("Heard.\n");
     int socktb;
     if((socktb = accept(sockfd,(struct sockaddr *)&client,&size))<0){ 
-        perror("connection socket creation failed"); 
+        perror("Connection socket creation failed."); 
         exit(EXIT_FAILURE); 
-    } //INITALIZE CLIENT
-
+    }
+    printf("Request accepted.\n");
 
     char* msg_rec = malloc(20);
     int rec_len = 0;
 
+    printf("Waiting for message...\n");
     while(1){
         rec_len = read(socktb,msg_rec,20);
         if(msg_rec!=NULL && rec_len>0){break; close(socktb);}

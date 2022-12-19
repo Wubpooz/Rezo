@@ -25,9 +25,10 @@ int main(int argc, char* argv[]){
 
 
     if((sockfd = socket(PF_INET,SOCK_DGRAM,0))<0){ 
-        perror("socket creation failed"); 
+        perror("Socket creation failed."); 
         exit(EXIT_FAILURE); 
     }
+    printf("Socket created.\n");
 
     if(argc<2){return 1;}
     host = gethostbyname(argv[1]);
@@ -37,7 +38,6 @@ int main(int argc, char* argv[]){
     server.sin_family = host->h_addrtype;
     server.sin_port = htons(PORT);
     server.sin_addr.s_addr = inet_addr(IP);
-
 
     printf("Client message : ");
     fgets(buff, len, stdin);    // = scanf("%lens",buff);
