@@ -36,12 +36,13 @@ int main(int argc, char* argv[]){
         exit(EXIT_FAILURE); 
     }
 
-    if((int socktb = socket(PF_INET,SOCK_SOCK_STREAM,0))<0){ 
+    int socktb;
+    if(socktb = socket(PF_INET,SOCK_STREAM,0)<0){ 
         perror("socket creation failed"); 
         exit(EXIT_FAILURE); 
     } 
 
-    accept(socktb,(struct sockaddr)&client,&sizeof(client));    //INITALIZE CLIENT
+    accept(socktb,(struct sockaddr *)&client,sizeof(&client));    //INITALIZE CLIENT
 
 
     char* msg_rec = malloc(20);
@@ -49,13 +50,12 @@ int main(int argc, char* argv[]){
 
     while(1){
         rec_len = recvfrom(sockfd,msg_rec,size,0,(struct sockaddr *)&client,&size);
-        if(msg_rec!=NULL && rec_len!=-1){break; close(sockfd);}
+        if(msg_rec!=NULL && rec_len!=-1){break; close(socktb);}
     }
     
     msg_rec[rec_len] = '\0';
     printf("Message : %s\n",msg_rec);
 
-    close();
-
+    close(sockfd);
     return 0;
 }

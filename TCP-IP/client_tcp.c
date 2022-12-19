@@ -32,7 +32,7 @@ int main(int argc, char* argv[]){
     if(argc<2){return 1;}
     host = gethostbyname(argv[1]);
     if(!host) return 1;
-    char* IP = inet_ntoa(*(struct in_addr*)host->h_addr);
+    char* IP = inet_ntoa(*(struct in_addr*)host->h_addr_list[0]);
 
     server.sin_family = host->h_addrtype;
     server.sin_port = htons(PORT);
@@ -40,9 +40,11 @@ int main(int argc, char* argv[]){
 
 
     
-    connect(sockfd,(struct sockaddr)&server,sizeof(server));
-    fget(buff,len,stdin);
-    write();
+    connect(sockfd,(struct sockaddr *)&server,sizeof(server));
+    printf("Client Message : ");
+    fgets(buff,len,stdin);
+    write(sockfd,buff,len);
+    printf("Message sent !");
 
     close(sockfd);
     return 0;
